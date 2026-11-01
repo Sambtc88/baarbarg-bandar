@@ -43,7 +43,7 @@ jobs:
 
       - name: Build APK
         run: |
-          flet build apk --yes --verbose --project "BarbargBandar" --description "Urban Cargo App"
+          flet build apk --verbose --project "BarbargBandar" --description "Urban Cargo App"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
