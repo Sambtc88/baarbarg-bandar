@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libmpv-dev mpv
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -30,14 +35,15 @@ jobs:
           flutter-version: '3.24.3'
           channel: 'stable'
 
-      - name: Install dependencies
+      - name: Install dependencies and prepare requirements
         run: |
           pip install --upgrade pip
-          pip install "flet[all]==0.24.1" httpx
+          pip install "flet==0.24.1" httpx
+          printf "flet==0.24.1\nhttpx\n" > requirements.txt
 
       - name: Build APK
         run: |
-          flet build apk --verbose --project "BarbargBandar" --description "Urban Cargo App"
+          flet build apk --yes --verbose --project "BarbargBandar" --description "Urban Cargo App"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
