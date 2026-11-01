@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -18,25 +18,26 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: Install Java 17
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: 'stable'
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install "flet[all]==0.24.1" httpx
 
       - name: Build APK
         run: |
-          flet build apk --project "BarbargBandar" --description "Urban Cargo App"
+          flet build apk --verbose --project "BarbargBandar" --description "Urban Cargo App"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
