@@ -27,12 +27,12 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1'
+          flutter-version: '3.24.5'
           channel: 'stable'
 
       - name: Accept Android Licenses
         run: |
-          yes | sdkmanager --licenses || true
+          yes | flutter doctor --android-licenses || true
           flutter config --no-analytics
 
       - name: Install dependencies and prepare requirements
